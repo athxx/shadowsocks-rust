@@ -27,12 +27,12 @@ shadowsocks-rust 是 Shadowsocks 的一个 Rust 实现版本，相比原版具�
 一键安装：
 
 ```bash
-wget -O ss-rust.sh --no-check-certificate https://raw.githubusercontent.com/athxx/shadowsocks-rust/main/ss-rust.sh && chmod +x ss-rust.sh && ./ss-rust.sh
+wget --no-check-certificate https://raw.githubusercontent.com/athxx/shadowsocks-rust/main/ss-rust.sh && chmod +x ss-rust.sh && ./ss-rust.sh
 ```
 
 **Docker版本** ( 无需预先安装Docker, 脚本自带安装 )
 ```bash
-wget -O ss-rust-docker.sh --no-check-certificate https://raw.githubusercontent.com/athxx/shadowsocks-rust/main/ss-rust-docker.sh && chmod +x ss-rust-docker.sh && ./ss-rust.sh
+wget --no-check-certificate https://raw.githubusercontent.com/athxx/shadowsocks-rust/main/ss-rust-docker.sh && chmod +x ss-rust-docker.sh && ./ss-rust-docker.sh
 ```
 
 ## 功能
