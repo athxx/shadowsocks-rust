@@ -116,29 +116,27 @@ check_ver_comparison(){
 }
 
 Download() {
-	if [[ ! -e "${FOLDER}" ]]; then
-		mkdir "${FOLDER}"
-	fi
+	mkdir -p "${FOLDER}" || return 1
+	cd "${FOLDER}" || return 1
+	FILE_NAME="shadowsocks-v${Ver}.${arch}-unknown-linux-gnu.tar.xz"
 	echo -e "${Info} 开始下载 Shadowsocks Rust ……"
-	wget --no-check-certificate -N "https://github.com/shadowsocks/shadowsocks-rust/releases/download/v${Ver}/shadowsocks-v${Ver}.${arch}-unknown-linux-gnu.tar.xz"
-	if [[ ! -e "shadowsocks-${Ver}.${arch}-unknown-linux-gnu.tar.xz" ]]; then
+	wget --no-check-certificate -N "https://github.com/shadowsocks/shadowsocks-rust/releases/download/v${Ver}/${FILE_NAME}"
+	if [[ ! -f "${FILE_NAME}" ]]; then
 		echo -e "${Error} Shadowsocks Rust 下载失败！"
-		return 1 && exit 1
-	else
-		tar -xvf "shadowsocks-${Ver}.${arch}-unknown-linux-gnu.tar.xz"
+		return 1
 	fi
-	if [[ ! -e "ssserver" ]]; then
+
+	tar -xvf "${FILE_NAME}"
+
+	if [[ ! -f "ssserver" ]]; then
 		echo -e "${Error} Shadowsocks Rust 解压失败 !"
-		echo -e "${Error} Shadowsocks Rust 安装失败 !"
-		return 1 && exit 1
-	else
-		rm -rf "shadowsocks-${Ver}.${arch}-unknown-linux-gnu.tar.xz"
-		chmod +x ssserver
-		mv -f ssserver "${FILE}"
-		rm sslocal ssmanager ssservice ssurl
-		echo -e "${Info} Shadowsocks Rust 主程序下载安装完毕！"
-		return 0
+		return 1
 	fi
+	chmod +x ssserver
+	mv -f ssserver "${FILE}"
+	rm sslocal ssmanager ssservice ssurl "${FILE_NAME}"
+	echo -e "${Info} Shadowsocks Rust 主程序下载安装完毕！"
+	return 0
 }
 
 Service(){
